@@ -5,52 +5,54 @@ import React, { useEffect, useState } from 'react'
 import { Button, Table } from 'react-bootstrap'
 import { AiOutlineDelete } from 'react-icons/ai'
 import { BsFillPencilFill } from 'react-icons/bs'
-
+ 
 const index = () => {
 
-  const [disciplinas, setDisciplinas] = useState([])
+  const [salas, setSalas] = useState([])
 
   useEffect(() => { 
-    setDisciplinas(getAll())
+    setSalas(getAll())
   }, [])
 
   function getAll() {
-    return JSON.parse(window.localStorage.getItem('disciplinas')) || []
+    return JSON.parse(window.localStorage.getItem('salas')) || []
   }
 
   function excluir(id) {
     if (confirm('Deseja realmente excluir o registro?')) {
-      const disciplinas = getAll()
-      disciplinas.splice(id, 1)
-      window.localStorage.setItem('disciplinas', JSON.stringify(disciplinas))
-      setDisciplinas(disciplinas)
+      const salas = getAll()
+      salas.splice(id, 1)
+      window.localStorage.setItem('salas', JSON.stringify(salas))
+      setSalas(salas)
     }
   }
 
   return (
-    <Pagina titulo="Disciplinas">
+    <Pagina titulo="Salas">
 
-      <Link href={'/disciplinas/form'} className="btn btn-primary mb-2" >Novo</Link>
+      <Link href={'/salas/form'} className="btn btn-primary mb-2" >Novo</Link>
 
       <Table striped bordered hover>
         <thead>
           <tr>
             <th>#</th>
             <th>Nome</th>
-            <th>Curso</th>
+            <th>Capacidade</th>
+            <th>Tipo</th>
           </tr>
         </thead>
         <tbody>
-          {disciplinas.map((item, i) => (
+          {salas.map((item, i) => (
             <tr key={i}>
               <td>
-                <Link href={'/disciplinas/' + i}>
+                <Link href={'/salas/' + i}>
                   <BsFillPencilFill className='me-2 text-primary' />
                 </Link>
                 <AiOutlineDelete onClick={() => excluir(i)} className='text-danger' />
               </td>
               <td>{item.nome}</td>
-              <td>{item.curso}</td>
+              <td>{item.capacidade}</td>
+              <td>{item.tipo}</td>
             </tr>
           ))}
         </tbody>

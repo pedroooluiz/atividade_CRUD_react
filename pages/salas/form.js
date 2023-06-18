@@ -7,22 +7,22 @@ import { useForm } from 'react-hook-form'
 import { AiOutlineCheck } from 'react-icons/ai'
 import { IoMdArrowRoundBack } from 'react-icons/io'
 import cursoValidator from '@/validators/cursoValidator'
-import validatorDisciplina from '@/validators/validatorDisciplina'
-
+import validatorSala from '@/validators/validatorSala'
+ 
 const form = () => { 
 
   const { push } = useRouter()
   const { register, handleSubmit, formState: { errors } } = useForm()
 
   function salvar(dados) {
-    const disciplinas = JSON.parse(window.localStorage.getItem('disciplinas')) || []
-    disciplinas.push(dados)
-    window.localStorage.setItem('disciplinas', JSON.stringify(disciplinas))
-    push('/disciplinas')
+    const salas = JSON.parse(window.localStorage.getItem('salas')) || []
+    salas.push(dados)
+    window.localStorage.setItem('salas', JSON.stringify(salas))
+    push('/salas')
   }
 
   return (
-    <Pagina titulo="Disciplinas">
+    <Pagina titulo="Salas">
 
       <Form>
         <Form.Group className="mb-3" controlId="nome">
@@ -33,13 +33,22 @@ const form = () => {
             <small>{errors.nome.message}</small>
           }
         </Form.Group>
-
-        <Form.Group className="mb-3" controlId="curso">
-          <Form.Label>Curso: </Form.Label>
-          <Form.Control isInvalid={errors.curso} type="text" {...register('curso', validatorDisciplina.curso)} />
+        
+        <Form.Group className="mb-3" controlId="capacidade">
+          <Form.Label>Capacidade: </Form.Label>
+          <Form.Control isInvalid={errors.capacidade} type="text" {...register('capacidade', validatorSala.capacidade)} />
           {
-            errors.curso && 
-            <small>{errors.curso.message}</small>
+            errors.capacidade && 
+            <small>{errors.capacidade.message}</small>
+          }
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="tipo">
+          <Form.Label>Tipo: </Form.Label>
+          <Form.Control isInvalid={errors.tipo} type="text" {...register('tipo', validatorSala.tipo)} />
+          {
+            errors.tipo && 
+            <small>{errors.tipo.message}</small>
           }
         </Form.Group>
 
@@ -48,7 +57,7 @@ const form = () => {
             <AiOutlineCheck className='me-1' />
             Salvar
           </Button>
-          <Link href={'/disciplinas'} className="ms-2 btn btn-danger">
+          <Link href={'/salas'} className="ms-2 btn btn-danger">
             <IoMdArrowRoundBack className='me-1' />
             Voltar
           </Link>

@@ -7,50 +7,52 @@ import { AiOutlineDelete } from 'react-icons/ai'
 import { BsFillPencilFill } from 'react-icons/bs'
 
 const index = () => {
+ 
+  const [semestres, setSemestres] = useState([])
 
-  const [disciplinas, setDisciplinas] = useState([])
-
-  useEffect(() => { 
-    setDisciplinas(getAll())
+  useEffect(() => {
+    setSemestres(getAll())
   }, [])
 
   function getAll() {
-    return JSON.parse(window.localStorage.getItem('disciplinas')) || []
+    return JSON.parse(window.localStorage.getItem('semestres')) || []
   }
 
   function excluir(id) {
     if (confirm('Deseja realmente excluir o registro?')) {
-      const disciplinas = getAll()
-      disciplinas.splice(id, 1)
-      window.localStorage.setItem('disciplinas', JSON.stringify(disciplinas))
-      setDisciplinas(disciplinas)
+      const semestres = getAll()
+      semestres.splice(id, 1)
+      window.localStorage.setItem('semestres', JSON.stringify(semestres))
+      setSemestres(semestres)
     }
   }
 
   return (
-    <Pagina titulo="Disciplinas">
+    <Pagina titulo="Semestres">
 
-      <Link href={'/disciplinas/form'} className="btn btn-primary mb-2" >Novo</Link>
+      <Link href={'/semestres/form'} className="btn btn-primary mb-2" >Novo</Link>
 
       <Table striped bordered hover>
         <thead>
           <tr>
             <th>#</th>
             <th>Nome</th>
-            <th>Curso</th>
+            <th>Data Inicio</th>
+            <th>Data Término</th>
           </tr>
         </thead>
         <tbody>
-          {disciplinas.map((item, i) => (
+          {semestres.map((item, i) => (
             <tr key={i}>
               <td>
-                <Link href={'/disciplinas/' + i}>
+                <Link href={'/semestres/' + i}>
                   <BsFillPencilFill className='me-2 text-primary' />
                 </Link>
                 <AiOutlineDelete onClick={() => excluir(i)} className='text-danger' />
               </td>
               <td>{item.nome}</td>
-              <td>{item.curso}</td>
+              <td>{item.dataInicio}</td>
+              <td>{item.dataFim}</td>
             </tr>
           ))}
         </tbody>
